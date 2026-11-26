@@ -1,0 +1,11 @@
+Kit de imagens da Rede Ritmo
+
+1. No Windows, clique com o botão direito no ZIP e escolha “Extrair Tudo”.
+2. Na pasta extraída, abra ABRA-O-CATALOGO.html. Clique na imagem de que você gostou para ver o arquivo inteiro.
+3. Na ferramenta em que está montando a página, anexe as fotos escolhidas e a logo da pasta 00-marca. Se estiver escrevendo o código, copie esses arquivos para a pasta de imagens do seu projeto.
+
+As 12 fotos estão no formato WebP, próprio para páginas da web. Você pode combinar as imagens, recortar e escolher quantas usar. Para começar, experimente uma foto horizontal no topo e uma vertical perto do formulário.
+
+A cor da marca é laranja (#FF6B2C). O nome aparece em branco quente (#FFF6EF) e fica legível sobre grafite (#191817).
+
+A Rede Ritmo é uma academia fictícia. A marca vem do material do projeto. As fotos das pessoas e dos espaços foram geradas por IA para esta atividade.

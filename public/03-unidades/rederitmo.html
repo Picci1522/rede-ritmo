@@ -1,0 +1,1715 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aula experimental gratuita | Rede Ritmo</title>
+  <meta name="description" content="Seu próximo ritmo começa aqui. Escolha entre Musculação, Funcional, Pilates e Dança e solicite sua primeira aula experimental gratuita nas unidades Centro, Estreito e São José." />
+  <link rel="icon" type="image/png" href="00-marca/icone-aba.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --grafite: #191817;
+      --grafite-card: #22201E;
+      --grafite-borda: #33302D;
+      --laranja: #FF6B2C;
+      --laranja-hover: #E85A1E;
+      --branco-quente: #FFF6EF;
+      --branco-suave: #F5EAE0;
+      --texto-secundario-escuro: #C9BFB6;
+      --texto-secundario-claro: #544E49;
+      --borda-clara: #E4D7CC;
+
+      --quente-bg: rgba(255, 107, 44, 0.16);
+      --quente-border: #FF6B2C;
+      --quente-text: #FF8C5A;
+
+      --morno-bg: rgba(234, 179, 8, 0.16);
+      --morno-border: #EAB308;
+      --morno-text: #FACC15;
+
+      --frio-bg: rgba(56, 189, 248, 0.16);
+      --frio-border: #38BDF8;
+      --frio-text: #7DD3FC;
+
+      --container-max: 1200px;
+      --gutter: 20px;
+      --radius-card: 14px;
+      --radius-btn: 10px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--grafite);
+      color: var(--branco-quente);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      object-fit: cover;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: 100%;
+      max-width: var(--container-max);
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: var(--gutter);
+      padding-right: var(--gutter);
+    }
+
+    /* Botões */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 22px;
+      border-radius: var(--radius-btn);
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+    }
+
+    .btn:active {
+      transform: translateY(1px);
+    }
+
+    .btn:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+    .btn-primary {
+      background-color: var(--laranja);
+      color: var(--grafite);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background-color: var(--laranja-hover);
+      color: var(--branco-quente);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      border-color: var(--grafite-borda);
+      color: var(--branco-quente);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--laranja);
+      color: var(--laranja);
+    }
+
+    .btn-full {
+      width: 100%;
+    }
+
+    /* Cabeçalho Fixo */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background-color: rgba(25, 24, 23, 0.96);
+      border-bottom: 1px solid var(--grafite-borda);
+      backdrop-filter: blur(8px);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 74px;
+      gap: 16px;
+    }
+
+    .brand-link img {
+      height: 36px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .desktop-nav {
+      display: none;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .desktop-nav a.nav-item {
+      font-size: 0.94rem;
+      font-weight: 500;
+      color: var(--texto-secundario-escuro);
+      position: relative;
+      padding: 6px 0;
+      transition: color 0.2s ease;
+    }
+
+    .desktop-nav a.nav-item:hover,
+    .desktop-nav a.nav-item.active {
+      color: var(--branco-quente);
+    }
+
+    .desktop-nav a.nav-item.active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 2px;
+      background-color: var(--laranja);
+      border-radius: 2px;
+    }
+
+    .mobile-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      border: 1px solid var(--grafite-borda);
+      background: var(--grafite-card);
+      color: var(--branco-quente);
+      cursor: pointer;
+    }
+
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+      padding: 16px var(--gutter) 22px;
+      border-top: 1px solid var(--grafite-borda);
+      background-color: var(--grafite);
+    }
+
+    .mobile-menu.open {
+      display: flex;
+    }
+
+    .mobile-menu a.nav-item {
+      padding: 8px 4px;
+      font-weight: 500;
+      color: var(--branco-quente);
+      border-bottom: 1px solid var(--grafite-borda);
+    }
+
+    @media (min-width: 900px) {
+      .desktop-nav {
+        display: flex;
+      }
+      .mobile-toggle,
+      .mobile-menu {
+        display: none !important;
+      }
+    }
+
+    /* Tipografia e Rótulos de Seção */
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--laranja);
+      margin-bottom: 12px;
+    }
+
+    .eyebrow-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--laranja);
+      flex-shrink: 0;
+    }
+
+    h1, h2, h3 {
+      font-weight: 700;
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+    }
+
+    section {
+      padding: 68px 0;
+    }
+
+    @media (min-width: 900px) {
+      section {
+        padding: 92px 0;
+      }
+    }
+
+    /* 2. Hero */
+    .hero {
+      padding-top: 48px;
+      padding-bottom: 72px;
+      border-bottom: 1px solid var(--grafite-borda);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 36px;
+      align-items: center;
+    }
+
+    @media (min-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 48px;
+      }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+      color: var(--branco-quente);
+      margin-bottom: 18px;
+    }
+
+    .hero h1 span {
+      color: var(--laranja);
+    }
+
+    .hero-subtitle {
+      font-size: 1.08rem;
+      color: var(--texto-secundario-escuro);
+      margin-bottom: 14px;
+      max-width: 560px;
+    }
+
+    .hero-complement {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--branco-quente);
+      padding-left: 12px;
+      border-left: 3px solid var(--laranja);
+      margin-bottom: 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .hero-media {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--grafite-borda);
+      background-color: var(--grafite-card);
+    }
+
+    .hero-media img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+    }
+
+    .hero-badge-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 18px;
+      background-color: var(--grafite-card);
+      border-top: 1px solid var(--grafite-borda);
+      font-size: 0.85rem;
+      color: var(--texto-secundario-escuro);
+    }
+
+    .hero-badge-bar strong {
+      color: var(--branco-quente);
+      font-weight: 600;
+    }
+
+    /* Cabeçalhos de Seção */
+    .section-header {
+      max-width: 680px;
+      margin-bottom: 40px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(1.75rem, 3.2vw, 2.45rem);
+      margin-bottom: 12px;
+    }
+
+    .section-header p {
+      font-size: 1.02rem;
+      color: var(--texto-secundario-escuro);
+    }
+
+    /* Seção Clara Alternada (Branco Quente) */
+    .section-warm {
+      background-color: var(--branco-quente);
+      color: var(--grafite);
+    }
+
+    .section-warm .section-header p {
+      color: var(--texto-secundario-claro);
+    }
+
+    /* 3. Modalidades */
+    .modalities-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    @media (min-width: 600px) {
+      .modalities-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 960px) {
+      .modalities-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .modality-card {
+      background-color: #FFFFFF;
+      border: 1px solid var(--borda-clara);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modality-card img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+    }
+
+    .modality-body {
+      padding: 20px;
+      flex: 1;
+    }
+
+    .modality-body h3 {
+      font-size: 1.18rem;
+      color: var(--grafite);
+      margin-bottom: 8px;
+    }
+
+    .modality-body p {
+      font-size: 0.93rem;
+      color: var(--texto-secundario-claro);
+    }
+
+    /* 4. Unidades */
+    .units-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 22px;
+      margin-bottom: 32px;
+    }
+
+    @media (min-width: 768px) {
+      .units-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .unit-card {
+      background-color: var(--grafite-card);
+      border: 1px solid var(--grafite-borda);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.2s ease;
+    }
+
+    .unit-card.selected {
+      border-color: var(--laranja);
+    }
+
+    .unit-card img {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+    }
+
+    .unit-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      flex: 1;
+      justify-content: space-between;
+    }
+
+    .unit-body h3 {
+      font-size: 1.25rem;
+      color: var(--branco-quente);
+    }
+
+    .btn-unit {
+      width: 100%;
+      background-color: var(--grafite);
+      color: var(--branco-quente);
+      border: 1px solid var(--grafite-borda);
+    }
+
+    .btn-unit:hover,
+    .unit-card.selected .btn-unit {
+      background-color: var(--laranja);
+      border-color: var(--laranja);
+      color: var(--grafite);
+    }
+
+    .structure-banner {
+      display: grid;
+      grid-template-columns: 1fr;
+      background-color: var(--grafite-card);
+      border: 1px solid var(--grafite-borda);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      align-items: center;
+    }
+
+    @media (min-width: 768px) {
+      .structure-banner {
+        grid-template-columns: 340px 1fr;
+      }
+    }
+
+    .structure-banner img {
+      width: 100%;
+      height: 190px;
+    }
+
+    .structure-banner-text {
+      padding: 24px;
+    }
+
+    .structure-banner-text h3 {
+      font-size: 1.15rem;
+      margin-bottom: 6px;
+    }
+
+    .structure-banner-text p {
+      font-size: 0.94rem;
+      color: var(--texto-secundario-escuro);
+    }
+
+    /* 5. Como Funciona */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+
+    @media (min-width: 640px) {
+      .steps-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 960px) {
+      .steps-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .step-card {
+      background-color: #FFFFFF;
+      border: 1px solid var(--borda-clara);
+      border-radius: var(--radius-card);
+      padding: 24px 20px;
+    }
+
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background-color: var(--laranja);
+      color: var(--grafite);
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-bottom: 16px;
+    }
+
+    .step-card h3 {
+      font-size: 1rem;
+      letter-spacing: 0.04em;
+      color: var(--grafite);
+      margin-bottom: 8px;
+    }
+
+    .step-card p {
+      font-size: 0.92rem;
+      color: var(--texto-secundario-claro);
+    }
+
+    .welcome-gallery {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    @media (min-width: 768px) {
+      .welcome-gallery {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .welcome-gallery figure {
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      border: 1px solid var(--borda-clara);
+      background-color: #FFFFFF;
+    }
+
+    .welcome-gallery img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+    }
+
+    /* 6. Formulário */
+    .form-section {
+      border-top: 1px solid var(--grafite-borda);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 36px;
+      align-items: start;
+    }
+
+    @media (min-width: 900px) {
+      .form-grid {
+        grid-template-columns: 0.95fr 1.05fr;
+        gap: 48px;
+      }
+    }
+
+    .form-intro h2 {
+      font-size: clamp(1.8rem, 3.3vw, 2.5rem);
+      margin-bottom: 14px;
+    }
+
+    .form-intro p {
+      color: var(--texto-secundario-escuro);
+      margin-bottom: 24px;
+    }
+
+    .form-intro img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border-radius: var(--radius-card);
+      border: 1px solid var(--grafite-borda);
+    }
+
+    .form-card {
+      background-color: var(--grafite-card);
+      border: 1px solid var(--grafite-borda);
+      border-radius: 16px;
+      padding: 26px 22px;
+    }
+
+    @media (min-width: 600px) {
+      .form-card {
+        padding: 34px 32px;
+      }
+    }
+
+    .form-card-header {
+      margin-bottom: 22px;
+    }
+
+    .form-card-header h3 {
+      font-size: 1.4rem;
+      margin-bottom: 4px;
+    }
+
+    .form-card-header p {
+      font-size: 0.92rem;
+      color: var(--texto-secundario-escuro);
+    }
+
+    .field-group {
+      margin-bottom: 16px;
+    }
+
+    .field-group label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--branco-quente);
+    }
+
+    .field-control {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--grafite-borda);
+      background-color: var(--grafite);
+      color: var(--branco-quente);
+      font-family: inherit;
+      font-size: 0.95rem;
+      transition: border-color 0.2s ease;
+    }
+
+    .field-control:focus {
+      outline: none;
+      border-color: var(--laranja);
+    }
+
+    .field-control.invalid {
+      border-color: #EF4444;
+    }
+
+    .field-error {
+      display: none;
+      font-size: 0.82rem;
+      color: #FCA5A5;
+      margin-top: 5px;
+    }
+
+    .field-error.visible {
+      display: block;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin: 18px 0 20px;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      margin-top: 3px;
+      accent-color: var(--laranja);
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .checkbox-group label {
+      font-size: 0.87rem;
+      font-weight: 400;
+      color: var(--texto-secundario-escuro);
+      cursor: pointer;
+      margin-bottom: 0;
+    }
+
+    /* Área de Status / Pós-envio */
+    .status-box {
+      display: none;
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 12px;
+      border: 1px solid var(--grafite-borda);
+      font-size: 0.93rem;
+    }
+
+    .status-box.visible {
+      display: block;
+    }
+
+    .status-box.error {
+      background-color: rgba(239, 68, 68, 0.12);
+      border-color: #EF4444;
+      color: #FECACA;
+    }
+
+    .status-box.duplicate {
+      background-color: rgba(234, 179, 8, 0.14);
+      border-color: #EAB308;
+      color: #FEF08A;
+    }
+
+    .status-box.success {
+      background-color: rgba(34, 197, 94, 0.12);
+      border-color: #22C55E;
+      color: var(--branco-quente);
+    }
+
+    .status-box h4 {
+      font-size: 1.08rem;
+      margin-bottom: 6px;
+    }
+
+    .receipt-details {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 246, 239, 0.15);
+      display: grid;
+      gap: 6px;
+      font-size: 0.88rem;
+    }
+
+    /* Badges de Prioridade */
+    .priority-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .priority-quente {
+      background-color: var(--quente-bg);
+      border: 1px solid var(--quente-border);
+      color: var(--quente-text);
+    }
+
+    .priority-morno {
+      background-color: var(--morno-bg);
+      border: 1px solid var(--morno-border);
+      color: var(--morno-text);
+    }
+
+    .priority-frio {
+      background-color: var(--frio-bg);
+      border: 1px solid var(--frio-border);
+      color: var(--frio-text);
+    }
+
+    /* Painel Técnico de Integração e Recepção (Avaliação) */
+    .ops-drawer {
+      margin-top: 28px;
+      background-color: var(--grafite-card);
+      border: 1px solid var(--grafite-borda);
+      border-radius: var(--radius-card);
+      padding: 18px 20px;
+    }
+
+    .ops-drawer summary {
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.92rem;
+      color: var(--laranja);
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .ops-content {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--grafite-borda);
+      display: grid;
+      gap: 16px;
+      font-size: 0.88rem;
+    }
+
+    .ops-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .ops-row input[type="url"] {
+      flex: 1;
+      min-width: 220px;
+    }
+
+    .reception-list {
+      display: grid;
+      gap: 10px;
+      max-height: 280px;
+      overflow-y: auto;
+    }
+
+    .reception-item {
+      background-color: var(--grafite);
+      border: 1px solid var(--grafite-borda);
+      border-radius: 10px;
+      padding: 12px 14px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .reception-item.hot-row {
+      border-left: 4px solid var(--laranja);
+    }
+
+    /* 12. Rodapé */
+    .site-footer {
+      background-color: #121110;
+      border-top: 1px solid var(--grafite-borda);
+      padding: 52px 0 32px;
+      color: var(--texto-secundario-escuro);
+      font-size: 0.9rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 28px;
+      margin-bottom: 36px;
+    }
+
+    @media (min-width: 768px) {
+      .footer-grid {
+        grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      }
+    }
+
+    .footer-brand img {
+      height: 36px;
+      width: auto;
+      object-fit: contain;
+      margin-bottom: 12px;
+    }
+
+    .footer-brand strong {
+      display: block;
+      color: var(--branco-quente);
+      font-size: 1rem;
+      margin-bottom: 8px;
+    }
+
+    .footer-col h4 {
+      color: var(--branco-quente);
+      font-size: 0.92rem;
+      margin-bottom: 12px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      display: grid;
+      gap: 8px;
+    }
+
+    .footer-col a:hover {
+      color: var(--laranja);
+    }
+
+    .footer-bottom {
+      padding-top: 20px;
+      border-top: 1px solid var(--grafite-borda);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 0.83rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. CABEÇALHO -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#inicio" class="brand-link" aria-label="Rede Ritmo — Ir para o início">
+        <img src="00-marca/logo-horizontal-transparente.png" alt="Logotipo Rede Ritmo" />
+      </a>
+
+      <nav class="desktop-nav" aria-label="Navegação principal">
+        <a href="#inicio" class="nav-item active" data-nav="inicio">Início</a>
+        <a href="#modalidades" class="nav-item" data-nav="modalidades">Modalidades</a>
+        <a href="#unidades" class="nav-item" data-nav="unidades">Unidades</a>
+        <a href="#como-funciona" class="nav-item" data-nav="como-funciona">Como funciona</a>
+        <a href="#formulario" class="btn btn-primary">Agendar aula grátis</a>
+      </nav>
+
+      <button type="button" class="mobile-toggle" id="mobileMenuBtn" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="mobileMenu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+
+    <nav class="mobile-menu" id="mobileMenu" aria-label="Navegação mobile">
+      <a href="#inicio" class="nav-item">Início</a>
+      <a href="#modalidades" class="nav-item">Modalidades</a>
+      <a href="#unidades" class="nav-item">Unidades</a>
+      <a href="#como-funciona" class="nav-item">Como funciona</a>
+      <a href="#formulario" class="btn btn-primary btn-full">Agendar aula grátis</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- 2. HERO -->
+    <section id="inicio" class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow"><span class="eyebrow-dot"></span>AULA EXPERIMENTAL GRATUITA</div>
+          <h1>Seu próximo ritmo <span>começa aqui</span></h1>
+          <p class="hero-subtitle">
+            Experimente uma nova forma de cuidar de você. Escolha sua modalidade, conheça nossa estrutura e venha fazer sua primeira aula gratuita na Rede Ritmo.
+          </p>
+          <p class="hero-complement">
+            Três unidades, diferentes modalidades e uma equipe pronta para receber você.
+          </p>
+          <div class="hero-actions">
+            <a href="#formulario" class="btn btn-primary">Quero minha aula grátis</a>
+            <a href="#modalidades" class="btn btn-outline">Conhecer modalidades</a>
+          </div>
+        </div>
+
+        <div class="hero-media">
+          <img src="01-topo/primeira-aula.webp" alt="Aluna e instrutora conversando durante uma primeira aula na Rede Ritmo." />
+          <div class="hero-badge-bar">
+            <span>Unidades: <strong>Centro · Estreito · São José</strong></span>
+            <span style="color: var(--laranja); font-weight: 600;">1ª aula gratuita</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. MODALIDADES -->
+    <section id="modalidades" class="section-warm">
+      <div class="container">
+        <div class="section-header">
+          <div class="eyebrow"><span class="eyebrow-dot"></span>NOSSAS MODALIDADES</div>
+          <h2>Encontre o treino que combina com você</h2>
+          <p>Na Rede Ritmo, você encontra diferentes formas de movimentar o corpo, desenvolver sua saúde e alcançar seus objetivos.</p>
+        </div>
+
+        <div class="modalities-grid">
+          <article class="modality-card">
+            <img src="02-modalidades/musculacao.webp" alt="Treino de Musculação na Rede Ritmo" loading="lazy" />
+            <div class="modality-body">
+              <h3>Musculação</h3>
+              <p>Desenvolva sua força, resistência e condicionamento físico.</p>
+            </div>
+          </article>
+
+          <article class="modality-card">
+            <img src="02-modalidades/funcional.webp" alt="Treino Funcional na Rede Ritmo" loading="lazy" />
+            <div class="modality-body">
+              <h3>Funcional</h3>
+              <p>Movimente seu corpo com exercícios dinâmicos e funcionais.</p>
+            </div>
+          </article>
+
+          <article class="modality-card">
+            <img src="02-modalidades/pilates.webp" alt="Aula de Pilates na Rede Ritmo" loading="lazy" />
+            <div class="modality-body">
+              <h3>Pilates</h3>
+              <p>Trabalhe equilíbrio, flexibilidade, postura e consciência corporal.</p>
+            </div>
+          </article>
+
+          <article class="modality-card">
+            <img src="02-modalidades/danca.webp" alt="Aula de Dança na Rede Ritmo" loading="lazy" />
+            <div class="modality-body">
+              <h3>Dança</h3>
+              <p>Movimente-se, divirta-se e aproveite os benefícios da atividade física.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. NOSSAS UNIDADES -->
+    <section id="unidades">
+      <div class="container">
+        <div class="section-header">
+          <div class="eyebrow"><span class="eyebrow-dot"></span>NOSSAS UNIDADES</div>
+          <h2>Uma Rede Ritmo perto de você</h2>
+          <p>Escolha a unidade que deseja conhecer e venha experimentar nossos espaços.</p>
+        </div>
+
+        <div class="units-grid">
+          <article class="unit-card" data-unit-card="centro">
+            <img src="03-unidades/centro.webp" alt="Estrutura interna da unidade Centro da Rede Ritmo" loading="lazy" />
+            <div class="unit-body">
+              <h3>Centro</h3>
+              <button type="button" class="btn btn-unit" data-select-unit="centro">Escolher esta unidade</button>
+            </div>
+          </article>
+
+          <article class="unit-card" data-unit-card="estreito">
+            <img src="03-unidades/estreito.webp" alt="Estrutura interna da unidade Estreito da Rede Ritmo" loading="lazy" />
+            <div class="unit-body">
+              <h3>Estreito</h3>
+              <button type="button" class="btn btn-unit" data-select-unit="estreito">Escolher esta unidade</button>
+            </div>
+          </article>
+
+          <article class="unit-card" data-unit-card="sao-jose">
+            <img src="03-unidades/sao-jose.webp" alt="Estrutura interna da unidade São José da Rede Ritmo" loading="lazy" />
+            <div class="unit-body">
+              <h3>São José</h3>
+              <button type="button" class="btn btn-unit" data-select-unit="sao-jose">Escolher esta unidade</button>
+            </div>
+          </article>
+        </div>
+
+        <div class="structure-banner">
+          <img src="01-topo/sala-de-treino.webp" alt="Sala de treino da Rede Ritmo preparada para receber alunos" loading="lazy" />
+          <div class="structure-banner-text">
+            <h3>Estrutura preparada para o seu primeiro treino</h3>
+            <p>Ambientes organizados, equipamentos modernos e acompanhamento próximo para você se sentir à vontade desde o primeiro dia.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. COMO FUNCIONA -->
+    <section id="como-funciona" class="section-warm">
+      <div class="container">
+        <div class="section-header">
+          <div class="eyebrow"><span class="eyebrow-dot"></span>COMO FUNCIONA</div>
+          <h2>É simples começar</h2>
+          <p>Em poucos passos, você solicita sua aula experimental gratuita.</p>
+        </div>
+
+        <div class="steps-grid">
+          <article class="step-card">
+            <span class="step-num">01</span>
+            <h3>ESCOLHA</h3>
+            <p>Informe seus dados e escolha a unidade e a modalidade desejada.</p>
+          </article>
+
+          <article class="step-card">
+            <span class="step-num">02</span>
+            <h3>SOLICITAÇÃO</h3>
+            <p>Seu pedido será registrado e encaminhado para a equipe responsável.</p>
+          </article>
+
+          <article class="step-card">
+            <span class="step-num">03</span>
+            <h3>PRIORIDADE</h3>
+            <p>Identificamos quando você pretende começar para organizar a ordem dos contatos.</p>
+          </article>
+
+          <article class="step-card">
+            <span class="step-num">04</span>
+            <h3>CONTATO</h3>
+            <p>A equipe da unidade escolhida poderá entrar em contato para dar continuidade ao atendimento.</p>
+          </article>
+        </div>
+
+        <div class="welcome-gallery">
+          <figure>
+            <img src="04-acolhimento/chegada-na-recepcao.webp" alt="Recepção acolhedora da Rede Ritmo" loading="lazy" />
+          </figure>
+          <figure>
+            <img src="04-acolhimento/preparando-o-treino.webp" alt="Preparação para a primeira aula na Rede Ritmo" loading="lazy" />
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. FORMULÁRIO DE INSCRIÇÃO -->
+    <section id="formulario" class="form-section">
+      <div class="container">
+        <div class="form-grid">
+          <div class="form-intro">
+            <div class="eyebrow"><span class="eyebrow-dot"></span>SUA PRIMEIRA AULA</div>
+            <h2>Agende sua aula experimental gratuita</h2>
+            <p>Preencha seus dados, escolha onde deseja treinar e conte quando pretende começar. Nossa equipe receberá sua solicitação.</p>
+            <img src="04-acolhimento/conversa-com-instrutora.webp" alt="Aluna conversando com uma instrutora da Rede Ritmo." loading="lazy" />
+          </div>
+
+          <div>
+            <div class="form-card">
+              <div class="form-card-header">
+                <h3>Solicite sua aula grátis</h3>
+                <p>Leva apenas alguns minutos.</p>
+              </div>
+
+              <form id="trialForm" novalidate>
+                <div class="field-group">
+                  <label for="nome">Nome completo</label>
+                  <input type="text" id="nome" name="nome" class="field-control" maxlength="100" required autocomplete="name" />
+                  <span class="field-error" id="err-nome">Informe seu nome completo.</span>
+                </div>
+
+                <div class="field-group">
+                  <label for="email">E-mail</label>
+                  <input type="email" id="email" name="email" class="field-control" required autocomplete="email" />
+                  <span class="field-error" id="err-email">Informe um e-mail válido.</span>
+                </div>
+
+                <div class="field-group">
+                  <label for="whatsapp">WhatsApp com DDD</label>
+                  <input type="tel" id="whatsapp" name="whatsapp" class="field-control" placeholder="(48) 99999-9999" required autocomplete="tel" />
+                  <span class="field-error" id="err-whatsapp">Informe um WhatsApp válido com DDD.</span>
+                </div>
+
+                <div class="field-group">
+                  <label for="unidade">Escolha sua unidade</label>
+                  <select id="unidade" name="unidade" class="field-control" required>
+                    <option value="">Selecione uma unidade</option>
+                    <option value="centro">Centro</option>
+                    <option value="estreito">Estreito</option>
+                    <option value="sao-jose">São José</option>
+                  </select>
+                  <span class="field-error" id="err-unidade">Selecione uma unidade.</span>
+                </div>
+
+                <div class="field-group">
+                  <label for="modalidade">Qual modalidade deseja experimentar?</label>
+                  <select id="modalidade" name="modalidade" class="field-control" required>
+                    <option value="">Selecione uma modalidade</option>
+                    <option value="musculacao">Musculação</option>
+                    <option value="funcional">Funcional</option>
+                    <option value="pilates">Pilates</option>
+                    <option value="danca">Dança</option>
+                  </select>
+                  <span class="field-error" id="err-modalidade">Selecione uma modalidade.</span>
+                </div>
+
+                <div class="field-group">
+                  <label for="prazo">Quando pretende começar?</label>
+                  <select id="prazo" name="prazo" class="field-control" required>
+                    <option value="">Selecione uma opção</option>
+                    <option value="esta-semana">Quero começar nesta semana</option>
+                    <option value="este-mes">Quero começar neste mês</option>
+                    <option value="pesquisando">Ainda estou pesquisando</option>
+                  </select>
+                  <span class="field-error" id="err-prazo">Informe quando pretende começar.</span>
+                </div>
+
+                <div class="checkbox-group">
+                  <input type="checkbox" id="consentimento" name="consentimento" required />
+                  <label for="consentimento">
+                    Autorizo a Rede Ritmo a utilizar meus dados para entrar em contato sobre minha solicitação de aula experimental.
+                  </label>
+                </div>
+                <span class="field-error" id="err-consentimento" style="margin-top:-12px; margin-bottom:14px;">
+                  É necessário autorizar o contato para continuar.
+                </span>
+
+                <button type="submit" class="btn btn-primary btn-full" id="submitBtn">
+                  Solicitar aula experimental grátis
+                </button>
+
+                <div id="statusBox" class="status-box" role="status" aria-live="polite"></div>
+              </form>
+            </div>
+
+            <!-- Painel Técnico de Integração e Recepção (Para configuração de Webhook real e auditoria) -->
+            <details class="ops-drawer" id="opsDrawer">
+              <summary>
+                <span>Integração com a Recepção & Fila de Atendimento (Configuração / Demonstração)</span>
+                <span style="font-size:0.8rem; color:var(--texto-secundario-escuro);">Abrir ▾</span>
+              </summary>
+
+              <div class="ops-content">
+                <div>
+                  <label for="webhookUrl" style="display:block; font-weight:600; margin-bottom:6px;">
+                    URL do Webhook Real (Make, n8n, Zapier ou Google Apps Script):
+                  </label>
+                  <div class="ops-row">
+                    <input type="url" id="webhookUrl" class="field-control" placeholder="https://seu-webhook-real.exemplo/recepcao" />
+                    <button type="button" class="btn btn-primary" id="saveWebhookBtn">Salvar URL</button>
+                  </div>
+                  <p style="color:var(--texto-secundario-escuro); margin-top:6px; font-size:0.82rem;">
+                    Nenhuma URL fictícia está embutida no código. Sem URL configurada, o sistema exige ativar o modo de demonstração local abaixo para não simular uma integração externa inexistente.
+                  </p>
+                </div>
+
+                <div class="ops-row">
+                  <input type="checkbox" id="demoModeToggle" style="width:16px; height:16px; accent-color:var(--laranja);" />
+                  <label for="demoModeToggle" style="cursor:pointer;">
+                    Ativar <strong>Modo de Demonstração Local (Avaliação)</strong> — registra e classifica localmente quando não houver webhook externo conectado.
+                  </label>
+                </div>
+
+                <div style="border-top:1px solid var(--grafite-borda); padding-top:14px;">
+                  <div class="ops-row" style="justify-content:space-between; margin-bottom:10px;">
+                    <strong>Pedidos encaminhados à Recepção (Prioridade Quente no topo):</strong>
+                    <div class="ops-row">
+                      <button type="button" class="btn btn-outline" id="exportJsonBtn" style="padding:7px 12px; font-size:0.8rem;">Exportar JSON</button>
+                      <button type="button" class="btn btn-outline" id="clearRecordsBtn" style="padding:7px 12px; font-size:0.8rem;">Limpar testes</button>
+                    </div>
+                  </div>
+                  <div id="receptionList" class="reception-list"></div>
+                </div>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 12. RODAPÉ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <img src="00-marca/logo-quadrada-grafite.png" alt="Rede Ritmo" loading="lazy" />
+          <strong>Rede Ritmo</strong>
+          <p>A Rede Ritmo é uma academia fictícia criada para o projeto avaliativo de No-Code e Low-Code do SENAI SC.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="#inicio">Início</a></li>
+            <li><a href="#modalidades">Modalidades</a></li>
+            <li><a href="#unidades">Unidades</a></li>
+            <li><a href="#como-funciona">Como funciona</a></li>
+            <li><a href="#formulario" style="color:var(--laranja); font-weight:600;">Aula experimental gratuita</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Modalidades</h4>
+          <ul>
+            <li><a href="#modalidades">Musculação</a></li>
+            <li><a href="#modalidades">Funcional</a></li>
+            <li><a href="#modalidades">Pilates</a></li>
+            <li><a href="#modalidades">Dança</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Unidades</h4>
+          <ul>
+            <li><a href="#unidades">Centro</a></li>
+            <li><a href="#unidades">Estreito</a></li>
+            <li><a href="#unidades">São José</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>Rede Ritmo — Campanha Aula Experimental Gratuita</span>
+        <span>Projeto avaliativo de No-Code e Low-Code · SENAI SC</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const STORAGE_LEADS_KEY = 'rede_ritmo_solicitacoes_v1';
+      const STORAGE_WEBHOOK_KEY = 'rede_ritmo_webhook_url_v1';
+      const STORAGE_DEMO_KEY = 'rede_ritmo_demo_mode_v1';
+
+      const LABELS_UNIDADE = {
+        'centro': 'Centro',
+        'estreito': 'Estreito',
+        'sao-jose': 'São José'
+      };
+
+      const EQUIPE_UNIDADE = {
+        'centro': 'Recepção Unidade Centro',
+        'estreito': 'Recepção Unidade Estreito',
+        'sao-jose': 'Recepção Unidade São José'
+      };
+
+      const LABELS_MODALIDADE = {
+        'musculacao': 'Musculação',
+        'funcional': 'Funcional',
+        'pilates': 'Pilates',
+        'danca': 'Dança'
+      };
+
+      // Menu Mobile
+      const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+      const mobileMenu = document.getElementById('mobileMenu');
+
+      mobileMenuBtn.addEventListener('click', () => {
+        const isOpen = mobileMenu.classList.toggle('open');
+        mobileMenuBtn.setAttribute('aria-expanded', String(isOpen));
+      });
+
+      mobileMenu.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.remove('open');
+          mobileMenuBtn.setAttribute('aria-expanded', 'false');
+        });
+      });
+
+      // Destaque de navegação ativa por seção
+      const sections = ['inicio', 'modalidades', 'unidades', 'como-funciona'];
+      const navLinks = document.querySelectorAll('.desktop-nav a[data-nav]');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            navLinks.forEach((a) => {
+              a.classList.toggle('active', a.dataset.nav === entry.target.id);
+            });
+          }
+        });
+      }, { rootMargin: '-25% 0px -55% 0px' });
+
+      sections.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) observer.observe(el);
+      });
+
+      // Seleção automática de unidade pelos cartões
+      const unidadeSelect = document.getElementById('unidade');
+      const unitCards = document.querySelectorAll('[data-unit-card]');
+
+      function syncUnitCardSelection(selectedValue) {
+        unitCards.forEach((card) => {
+          const isSelected = card.dataset.unitCard === selectedValue;
+          card.classList.toggle('selected', isSelected);
+          const btn = card.querySelector('button');
+          if (btn) {
+            btn.textContent = isSelected ? 'Unidade selecionada ✓' : 'Escolher esta unidade';
+          }
+        });
+      }
+
+      document.querySelectorAll('[data-select-unit]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const value = btn.dataset.selectUnit;
+          unidadeSelect.value = value;
+          syncUnitCardSelection(value);
+          clearFieldError('unidade');
+          document.getElementById('formulario').scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+
+      unidadeSelect.addEventListener('change', () => {
+        syncUnitCardSelection(unidadeSelect.value);
+      });
+
+      // Máscara de WhatsApp com DDD
+      const whatsappInput = document.getElementById('whatsapp');
+      whatsappInput.addEventListener('input', (e) => {
+        let digits = e.target.value.replace(/\D/g, '').slice(0, 11);
+        if (digits.length > 6) {
+          e.target.value = `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`;
+        } else if (digits.length > 2) {
+          e.target.value = `(${digits.slice(0, 2)}) ${digits.slice(2)}`;
+        } else if (digits.length > 0) {
+          e.target.value = `(${digits}`;
+        }
+      });
+
+      // 7. Sistema de Classificação Automática
+      function classificarInteressado(prazo) {
+        if (prazo === 'esta-semana') {
+          return {
+            classificacao: 'quente',
+            descricao: 'Interessado que pretende começar nesta semana.'
+          };
+        }
+        if (prazo === 'este-mes') {
+          return {
+            classificacao: 'morno',
+            descricao: 'Interessado que pretende começar neste mês.'
+          };
+        }
+        return {
+          classificacao: 'frio',
+          descricao: 'Interessado que ainda está pesquisando.'
+        };
+      }
+
+      // 8. Validação dos Dados
+      function normalizeWhatsapp(raw) {
+        return String(raw || '').replace(/\D/g, '');
+      }
+
+      function setFieldError(fieldId, show) {
+        const input = document.getElementById(fieldId);
+        const err = document.getElementById(`err-${fieldId}`);
+        if (input && input.classList) {
+          input.classList.toggle('invalid', show);
+        }
+        if (err) {
+          err.classList.toggle('visible', show);
+        }
+      }
+
+      function clearFieldError(fieldId) {
+        setFieldError(fieldId, false);
+      }
+
+      function validateForm(values) {
+        let valid = true;
+
+        const nomeValid = values.nome.trim().length >= 2 && values.nome.trim().length <= 100;
+        setFieldError('nome', !nomeValid);
+        if (!nomeValid) valid = false;
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+        const emailValid = emailRegex.test(values.email.trim());
+        setFieldError('email', !emailValid);
+        if (!emailValid) valid = false;
+
+        const phoneDigits = normalizeWhatsapp(values.whatsapp);
+        const phoneValid = phoneDigits.length === 10 || phoneDigits.length === 11;
+        setFieldError('whatsapp', !phoneValid);
+        if (!phoneValid) valid = false;
+
+        const unidadeValid = Boolean(LABELS_UNIDADE[values.unidade]);
+        setFieldError('unidade', !unidadeValid);
+        if (!unidadeValid) valid = false;
+
+        const modalidadeValid = Boolean(LABELS_MODALIDADE[values.modalidade]);
+        setFieldError('modalidade', !modalidadeValid);
+        if (!modalidadeValid) valid = false;
+
+        const prazoValid = ['esta-semana', 'este-mes', 'pesquisando'].includes(values.prazo);
+        setFieldError('prazo', !prazoValid);
+        if (!prazoValid) valid = false;
+
+        setFieldError('consentimento', !values.consentimento);
+        if (!values.consentimento) valid = false;
+
+        return valid;
+      }
+
+      // Persistência e Controle de Duplicidade (Camada de Registro)
+      function getStoredRecords() {
+        try {
+          return JSON.parse(localStorage.getItem(STORAGE_LEADS_KEY) || '[]');
+        } catch {
+          return [];
+        }
+      }
+
+      function saveRecordLayer(payload) {
+        const records = getStoredRecords();
+        const duplicate = records.find(
+          (item) => item.whatsapp_normalizado === payload.whatsapp_normalizado
+        );
+        if (duplicate) {
+          return {
+            ok: false,
+            reason: 'DUPLICATE',
+            existing: duplicate
+          };
+        }
+        records.unshift(payload);
+        localStorage.setItem(STORAGE_LEADS_KEY, JSON.stringify(records));
+        return { ok: true, record: payload };
+      }
+
+      // Configuração de Webhook e Fila da Recepção
+      const webhookUrlInput = document.getElementById('webhookUrl');
+      const saveWebhookBtn = document.getElementById('saveWebhookBtn');
+      const demoModeToggle = document.getElementById('demoModeToggle');
+      const receptionList = document.getElementById('receptionList');
+
+      webhookUrlInput.value = localStorage.getItem(STORAGE_WEBHOOK_KEY) || '';
+      demoModeToggle.checked = localStorage.getItem(STORAGE_DEMO_KEY) === 'true';
+
+      saveWebhookBtn.addEventListener('click', () => {
+        const url = webhookUrlInput.value.trim();
+        if (url && !/^https?:\/\/.+/.test(url)) {
+          alert('Informe uma URL HTTP/HTTPS válida para o webhook.');
+          return;
+        }
+        localStorage.setItem(STORAGE_WEBHOOK_KEY, url);
+        alert(url ? 'URL do webhook salva com sucesso.' : 'URL do webhook removida.');
+      });
+
+      demoModeToggle.addEventListener('change', () => {
+        localStorage.setItem(STORAGE_DEMO_KEY, String(demoModeToggle.checked));
+      });
+
+      function renderReceptionQueue() {
+        const records = getStoredRecords();
+        if (records.length === 0) {
+          receptionList.innerHTML = '<p style="color:var(--texto-secundario-escuro);">Nenhuma solicitação registrada ainda.</p>';
+          return;
+        }
+
+        // Ordena prioridades: quente primeiro, depois morno, depois frio
+        const order = { quente: 1, morno: 2, frio: 3 };
+        const sorted = [...records].sort((a, b) => (order[a.classificacao] || 9) - (order[b.classificacao] || 9));
+
+        receptionList.innerHTML = sorted.map((item) => `
+          <div class="reception-item ${item.classificacao === 'quente' ? 'hot-row' : ''}">
+            <div>
+              <strong>${escapeHtml(item.nome)}</strong> · <span style="color:var(--laranja);">${escapeHtml(item.equipe_destino)}</span><br />
+              <small style="color:var(--texto-secundario-escuro);">
+                Modalidade: ${escapeHtml(LABELS_MODALIDADE[item.modalidade] || item.modalidade)} · WhatsApp: ${escapeHtml(item.whatsapp)}
+              </small>
+            </div>
+            <span class="priority-badge priority-${escapeHtml(item.classificacao)}">
+              ${escapeHtml(item.classificacao.toUpperCase())}
+            </span>
+          </div>
+        `).join('');
+      }
+
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, '&')
+          .replace(/</g, '<')
+          .replace(/>/g, '>')
+          .replace(/"/g, '"');
+      }
+
+      document.getElementById('exportJsonBtn').addEventListener('click', () => {
+        const data = JSON.stringify(getStoredRecords(), null, 2);
+        const blob = new Blob([data], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'solicitacoes-rede-ritmo.json';
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+
+      document.getElementById('clearRecordsBtn').addEventListener('click', () => {
+        localStorage.removeItem(STORAGE_LEADS_KEY);
+        renderReceptionQueue();
+      });
+
+      renderReceptionQueue();
+
+      // Envio do Formulário
+      const form = document.getElementById('trialForm');
+      const submitBtn = document.getElementById('submitBtn');
+      const statusBox = document.getElementById('statusBox');
+      let isSubmitting = false;
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (isSubmitting) return;
+
+        const values = {
+          nome: document.getElementById('nome').value,
+          email: document.getElementById('email').value,
+          whatsapp: document.getElementById('whatsapp').value,
+          unidade: document.getElementById('unidade').value,
+          modalidade: document.getElementById('modalidade').value,
+          prazo: document.getElementById('prazo').value,
+          consentimento: document.getElementById('consentimento').checked
+        };
+
+        statusBox.className = 'status-box';
+        statusBox.innerHTML = '';
+
+        if (!validateForm(values)) {
+          statusBox.className = 'status-box error visible';
+          statusBox.innerHTML = '<h4>Verifique os campos destacados</h4><p>Preencha corretamente todas as informações obrigatórias para continuar.</p>';
+          return;
+        }
+
+        const webhookUrl = (localStorage.getItem(STORAGE_WEBHOOK_KEY) || '').trim();
+        const isDemoMode = localStorage.getItem(STORAGE_DEMO_KEY) === 'true';
+
+        if (!webhookUrl && !isDemoMode) {
+          document.getElementById('opsDrawer').open = true;
+          statusBox.className = 'status-box error visible';
+          statusBox.innerHTML = `
+            <h4>Integração externa ainda não configurada</h4>
+            <p>Para enviar a solicitação com confirmação real, configure a <strong>URL do Webhook</strong> no painel abaixo do formulário ou ative o <strong>Modo de Demonstração Local</strong> para testes avaliativos. Seus dados foram mantidos.</p>
+          `;
+          return;
+        }
+
+        isSubmitting = true;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Processando solicitação...';
+
+        const classificacaoObj = classificarInteressado(values.prazo);
+        const whatsappNormalizado = normalizeWhatsapp(values.whatsapp);
+
+        const payload = {
+          nome: values.nome.trim(),
+          email: values.email.trim().toLowerCase(),
+          whatsapp: values.whatsapp.trim(),
+          whatsapp_normalizado: whatsappNormalizado,
+          unidade: values.unidade,
+          equipe_destino: EQUIPE_UNIDADE[values.unidade],
+          modalidade: values.modalidade,
+          prazo: values.prazo,
+          classificacao: classificacaoObj.classificacao,
+          descricao_classificacao: classificacaoObj.descricao,
+          data_solicitacao: new Date().toISOString(),
+          consentimento: true
+        };
+
+        try {
+          // 9. Controle de duplicidade na camada de registro antes do envio
+          const layerCheck = saveRecordLayer(payload);
+          if (!layerCheck.ok && layerCheck.reason === 'DUPLICATE') {
+            statusBox.className = 'status-box duplicate visible';
+            statusBox.innerHTML = `
+              <h4>Solicitação já registrada para este WhatsApp</h4>
+              <p>Identificamos um pedido anterior vinculado ao número <strong>${escapeHtml(payload.whatsapp)}</strong> para a unidade <strong>${escapeHtml(LABELS_UNIDADE[layerCheck.existing.unidade])}</strong>. Nossa equipe já recebeu seu registro e entrará em contato.</p>
+            `;
+            return;
+          }
+
+          // 10. Integração real via Webhook se configurado
+          if (webhookUrl) {
+            const response = await fetch(webhookUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+              // Reverte o registro local se o webhook falhar
+              const current = getStoredRecords().filter((r) => r.whatsapp_normalizado !== whatsappNormalizado);
+              localStorage.setItem(STORAGE_LEADS_KEY, JSON.stringify(current));
+              throw new Error(`Falha na resposta da integração (HTTP ${response.status}).`);
+            }
+          }
+
+          renderReceptionQueue();
+
+          // 11. Experiência após o envio
+          statusBox.className = 'status-box success visible';
+          statusBox.innerHTML = `
+            <h4>Solicitação recebida!</h4>
+            <p>Obrigado por escolher a Rede Ritmo! Seus dados foram encaminhados para nossa equipe. Em breve, entraremos em contato para dar continuidade ao atendimento.</p>
+            <div class="receipt-details">
+              <div><strong>Unidade escolhida:</strong> ${escapeHtml(LABELS_UNIDADE[payload.unidade])} (${escapeHtml(payload.equipe_destino)})</div>
+              <div><strong>Modalidade escolhida:</strong> ${escapeHtml(LABELS_MODALIDADE[payload.modalidade])}</div>
+              <div><strong>Status do pedido:</strong> Recebido e encaminhado à recepção</div>
+            </div>
+          `;
+
+          form.reset();
+          syncUnitCardSelection('');
+        } catch (err) {
+          statusBox.className = 'status-box error visible';
+          statusBox.innerHTML = `
+            <h4>Não foi possível concluir o encaminhamento</h4>
+            <p>${escapeHtml(err.message || 'Erro de comunicação com a integração.')} Seus dados preenchidos foram preservados para nova tentativa.</p>
+          `;
+        } finally {
+          isSubmitting = false;
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Solicitar aula experimental grátis';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#191817">
+  <link rel="icon" href="00-marca/icone-aba.png">
+  <title>Kit de imagens · Rede Ritmo</title>
+  <style>
+    * { box-sizing: border-box }
+    body { margin: 0; background: #faf7f1; color: #231d19; font: 16px/1.5 Inter, "Segoe UI", Arial, sans-serif }
+    header { background: #191817; color: #fff6ef; padding: 32px 0; border-bottom: 4px solid #ff6b2c }
+    .wrap { width: min(1080px, 90%); margin: 0 auto }
+    header img { width: 150px; display: block; height: auto }
+    h1, h2, p { margin: 0 }
+    h1 { font-size: clamp(1.9rem, 5vw, 3rem); letter-spacing: -.04em; line-height: 1.15; margin: 18px 0 8px }
+    header p { max-width: 60ch; color: #e1d6c9 }
+    main { padding-bottom: 36px }
+    section { padding: 26px 0 8px }
+    h2 { font-size: clamp(1.35rem, 3vw, 1.8rem); letter-spacing: -.035em; line-height: 1.2 }
+    section p { color: #55493f; margin-top: 5px }
+    .grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; margin-top: 14px }
+    .duo { grid-template-columns: repeat(2,minmax(0,1fr)) }
+    .four { grid-template-columns: repeat(4,minmax(0,1fr)) }
+    a { color: inherit }
+    a:focus-visible { outline: 3px solid #a23e15; outline-offset: 4px }
+    .card { display: block; background: #fffdf8; border: 1px solid #ddd2c5; border-radius: 8px; overflow: hidden; text-decoration: none }
+    .card:hover span { text-decoration: underline; text-underline-offset: 3px }
+    .card img { display: block; width: 100%; aspect-ratio: 3/2; object-fit: cover }
+    .duo img { aspect-ratio: 16/9 }
+    .portraits img { aspect-ratio: 4/5 }
+    .card span { display: block; padding: 8px 12px 10px; font-weight: 600 }
+    .brand img { background: #191817; height: 108px; object-fit: contain; padding: 16px }
+    footer { border-top: 1px solid #ddd2c5; padding: 15px 0 30px; color: #55493f; font-size: .9rem }
+    @media(max-width:700px) { .four, .grid { grid-template-columns: repeat(2,minmax(0,1fr)) } .duo { grid-template-columns: 1fr } }
+    @media(max-width:420px) { .wrap { width: 92% } .grid { gap: 8px } .card span { padding: 6px 8px; font-size: .9rem } }
+  </style>
+</head>
+<body>
+  <header><div class="wrap"><img src="00-marca/logo-horizontal-transparente.png" alt="Rede Ritmo"><h1>Kit de imagens</h1><p>Escolha as imagens que combinam com a sua página de aula experimental. Clique em uma foto para abrir o arquivo em tamanho original.</p></div></header>
+  <main class="wrap">
+    <section>
+      <h2>Topo da página</h2>
+      <p>Em Primeira aula, o título cabe à esquerda. Em Sala de treino, experimente o lado direito.</p>
+      <div class="grid duo">
+        <a class="card" href="01-topo/primeira-aula.webp"><img src="01-topo/primeira-aula.webp" alt="Aluna e instrutora conversam na sala de treino."><span>Primeira aula</span></a>
+        <a class="card" href="01-topo/sala-de-treino.webp"><img src="01-topo/sala-de-treino.webp" alt="Luz de fim de tarde atravessa a área de treino, com aparelhos ao fundo."><span>Sala de treino</span></a>
+      </div>
+    </section>
+    <section>
+      <h2>Modalidades</h2>
+      <div class="grid four">
+        <a class="card" href="02-modalidades/musculacao.webp"><img src="02-modalidades/musculacao.webp" alt="Aluna faz um exercício de braço com halter."><span>Musculação</span></a>
+        <a class="card" href="02-modalidades/funcional.webp"><img src="02-modalidades/funcional.webp" alt="Aluno sobe em uma caixa de madeira durante o treino."><span>Funcional</span></a>
+        <a class="card" href="02-modalidades/pilates.webp"><img src="02-modalidades/pilates.webp" alt="Duas alunas se alongam sentadas em colchonetes."><span>Pilates</span></a>
+        <a class="card" href="02-modalidades/danca.webp"><img src="02-modalidades/danca.webp" alt="Instrutor e turma praticam um passo de dança."><span>Dança</span></a>
+      </div>
+    </section>
+    <section>
+      <h2>Unidades</h2>
+      <div class="grid">
+        <a class="card" href="03-unidades/centro.webp"><img src="03-unidades/centro.webp" alt="Sala de musculação com janelas voltadas para a rua."><span>Centro</span></a>
+        <a class="card" href="03-unidades/estreito.webp"><img src="03-unidades/estreito.webp" alt="Área de treino com parede de tijolos e caixas de madeira."><span>Estreito</span></a>
+        <a class="card" href="03-unidades/sao-jose.webp"><img src="03-unidades/sao-jose.webp" alt="Estúdio com piso claro e vista para o jardim."><span>São José</span></a>
+      </div>
+    </section>
+    <section>
+      <h2>Acolhimento</h2>
+      <p>Fotos verticais para usar junto ao formulário ou na versão para celular.</p>
+      <div class="grid portraits">
+        <a class="card" href="04-acolhimento/chegada-na-recepcao.webp"><img src="04-acolhimento/chegada-na-recepcao.webp" alt="Recepcionista conversa com um visitante no balcão."><span>Chegada à recepção</span></a>
+        <a class="card" href="04-acolhimento/conversa-com-instrutora.webp"><img src="04-acolhimento/conversa-com-instrutora.webp" alt="Aluna e instrutora conversam sentadas em um banco."><span>Conversa com a instrutora</span></a>
+        <a class="card" href="04-acolhimento/preparando-o-treino.webp"><img src="04-acolhimento/preparando-o-treino.webp" alt="Tênis, garrafa e toalha sobre um banco."><span>Preparando o treino</span></a>
+      </div>
+    </section>
+    <section>
+      <h2>Marca</h2>
+      <p>Use a logo horizontal sobre fundo escuro. O arquivo do ícone cabe na aba do navegador.</p>
+      <div class="grid brand">
+        <a class="card" href="00-marca/logo-horizontal-transparente.png"><img src="00-marca/logo-horizontal-transparente.png" alt="Nome da Rede Ritmo e símbolo laranja"><span>Logo horizontal</span></a>
+        <a class="card" href="00-marca/logo-quadrada-grafite.png"><img src="00-marca/logo-quadrada-grafite.png" alt="Logo da Rede Ritmo sobre grafite"><span>Logo quadrada</span></a>
+        <a class="card" href="00-marca/icone-aba.png"><img src="00-marca/icone-aba.png" alt="Símbolo da Rede Ritmo"><span>Ícone da aba</span></a>
+      </div>
+    </section>
+  </main>
+  <footer><div class="wrap">A Rede Ritmo é fictícia. As fotos das pessoas e das unidades foram geradas por IA para este projeto do curso.</div></footer>
+</body>
+</html>
