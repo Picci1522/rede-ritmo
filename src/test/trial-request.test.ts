@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { classifyDeadline, normalizeWhatsapp, trialSchema } from '@/lib/trial-request';
-const valid = { nome: 'Pessoa Teste', email: 'teste@example.com', whatsapp: '(48) 99999-0001', unidade: 'centro', modalidade: 'musculacao', prazo: 'esta-semana', consentimento: true };
+const valid = { nome: 'Pessoa Teste', email: 'teste@example.com', whatsapp: '(48) 99999-0001', unidade: 'centro', modalidade: 'musculacao', inicio: 'esta-semana', consentimento: true };
 describe('Regras da campanha', () => {
  it('esta-semana é quente', () => expect(classifyDeadline('esta-semana')).toBe('quente'));
  it('este-mes é morno', () => expect(classifyDeadline('este-mes')).toBe('morno'));
@@ -14,6 +14,9 @@ describe('Regras da campanha', () => {
  it('nome aceita até 100 caracteres', () => { expect(trialSchema.safeParse({...valid, nome: 'A'.repeat(100)}).success).toBe(true); expect(trialSchema.safeParse({...valid, nome: 'A'.repeat(101)}).success).toBe(false); });
  it('WhatsApp exige DDD', () => expect(trialSchema.safeParse({...valid, whatsapp: '99999-0001'}).success).toBe(false));
  it('modalidade é obrigatória', () => expect(trialSchema.safeParse({...valid, modalidade: ''}).success).toBe(false));
- it('prazo é obrigatório', () => expect(trialSchema.safeParse({...valid, prazo: ''}).success).toBe(false));
+ it('início é obrigatório', () => expect(trialSchema.safeParse({...valid, inicio: ''}).success).toBe(false));
+ it('honeypot preenchido bloqueia', () => expect(trialSchema.safeParse({...valid, website: 'robot'}).success).toBe(false));
+ it('normaliza nome e e-mail', () => { const data = trialSchema.parse({...valid, nome: '  Pessoa   Teste  ', email: '  TESTE@EXAMPLE.COM  '}); expect(data.nome).toBe('Pessoa Teste'); expect(data.email).toBe('teste@example.com'); });
+ it('WhatsApp enviado contém apenas números', () => expect(trialSchema.parse(valid).whatsapp).toBe('5548999990001'));
  it('ignora classificação manipulada', () => expect(trialSchema.parse({...valid, classificacao: 'frio'})).not.toHaveProperty('classificacao'));
 });

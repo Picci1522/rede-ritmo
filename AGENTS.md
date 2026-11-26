@@ -32,7 +32,7 @@ use the editor.
 ## Application architecture
 - Keep the campaign in the index route with section anchors, because the supplied brief explicitly requires a single-page experience.
 - Keep reusable validation and normalization in the shared trial-request module and revalidate public submissions server-side, because browser validation cannot protect stored data.
-- Store requests privately and derive priority in the database with a unique normalized WhatsApp, because concurrent submissions must obey classification and duplicate rules.
-- Load privileged clients only inside the narrowly scoped insert handler and never expose stored requests publicly, because lead data is personal.
-- Treat webhook delivery as confirmed only after a successful response and persisted delivery status; keep the URL in server secrets, because unconfigured integrations must not create false confirmations.
+- Store private n8n delivery reservations with unique normalized email and WhatsApp and an atomic claim function; n8n assigns new-request priority, because concurrent retries must not create duplicate Trello cards or conflicting classifications.
+- Load privileged clients only inside validated intake handlers and never expose stored requests or retry tokens publicly, because lead data is personal.
+- Send POST JSON from the server using N8N_WEBHOOK_URL, follow no redirects, and confirm only HTTP 2xx; retain a stable id for retries, because network failures must not cause false success or duplicate downstream work.
 - Keep supplied media in asset pointers and visual tokens in the global stylesheet, because the official visual identity and asset delivery must stay consistent.

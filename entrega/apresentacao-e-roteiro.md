@@ -1,5 +1,7 @@
 # Rede Ritmo — material para avaliação
 
+> Atualização: a etapa atual usa exclusivamente N8N_WEBHOOK_URL para enviar os novos pedidos ao n8n, que classifica, cria o cartão no Trello e registra o pedido. O contrato e as regras atuais estão em docs/n8n.md. As instruções abaixo documentam a primeira etapa e não devem ser usadas para configurar a integração nova. A URL ainda precisa ser fornecida; recebimento real no n8n/Trello não foi verificado.
+
 ## Apresentação curta
 A Rede Ritmo é uma rede fictícia de academias criada para o projeto avaliativo de No-Code e Low-Code do SENAI SC. A campanha permite solicitar uma aula experimental gratuita, escolher unidade e modalidade e informar quando se pretende começar. Os dados são validados e padronizados, os pedidos recebem prioridade automaticamente e ficam protegidos no Lovable Cloud. O encaminhamento externo depende de configurar e testar o destino da recepção; não há agendamento automático nem confirmação falsa.
 

@@ -8,6 +8,13 @@
       "when": 1795657611761,
       "tag": "0000_create_trial_requests",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1795658896739,
+      "tag": "0001_n8n_delivery_reservations",
+      "breakpoints": true
     }
   ]
 }

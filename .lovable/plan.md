@@ -1,5 +1,7 @@
 # Rede Ritmo — planejamento ULTRA V3
 
+> Histórico de planejamento: a solicitação de 26/11 substituiu a proposta de fila interna por integração n8n via N8N_WEBHOOK_URL. O painel não faz parte da etapa atual. Consulte docs/n8n.md para o contrato implementado e as pendências de configuração real.
+
 ## 1. Resumo e análise dos materiais
 A proposta é captar solicitações de aula experimental gratuita, validar e padronizar os dados, classificar os interessados e disponibilizar os pedidos à recepção da unidade escolhida. Não é uma confirmação de vaga ou horário.
 

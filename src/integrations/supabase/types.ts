@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      n8n_submissions: {
+        Row: {
+          attempt_at: string
+          created_at: string
+          email: string
+          id: string
+          payload: Json
+          retry_token: string
+          status: string
+          whatsapp: string
+        }
+        Insert: {
+          attempt_at?: string
+          created_at?: string
+          email: string
+          id?: string
+          payload: Json
+          retry_token: string
+          status?: string
+          whatsapp: string
+        }
+        Update: {
+          attempt_at?: string
+          created_at?: string
+          email?: string
+          id?: string
+          payload?: Json
+          retry_token?: string
+          status?: string
+          whatsapp?: string
+        }
+        Relationships: []
+      }
       trial_requests: {
         Row: {
           classificacao: string | null
@@ -64,7 +97,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      claim_n8n_submission: {
+        Args: { p_payload: Json; p_token: string }
+        Returns: Json
+      }
     }
     Enums: {
       [_ in never]: never

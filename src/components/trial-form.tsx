@@ -10,6 +10,7 @@ export function TrialForm({ unit, onUnitChange }: Props) {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [busy, setBusy] = useState(false);
   const sending = useRef(false);
+  const requestToken = useRef<string | null>(null);
   type Result = { status: 'success'; unidade: string; modalidade: string } | { status: 'duplicate' | 'error' | 'pending'; message: string };
   const [result, setResult] = useState<Result | null>(null);
   const submit = useServerFn(submitTrialRequest);
@@ -22,12 +23,13 @@ export function TrialForm({ unit, onUnitChange }: Props) {
     if (!parsed.success) {
       const next: Record<string, string> = {};
       parsed.error.issues.forEach(issue => { const key = String(issue.path[0]); if (!next[key]) next[key] = issue.message; });
-      setErrors(next); setResult(null);
+      setErrors(next); setResult(next['website'] ? { status: 'error', message: next['website'] } : null);
       const firstField = form.querySelector<HTMLElement>(`[name="${Object.keys(next)[0]}"]`);
       firstField?.focus(); return;
     }
     setErrors({}); sending.current = true; setBusy(true); setResult(null);
-    try { setResult(await submit({ data: parsed.data })); }
+    if (!requestToken.current) requestToken.current = crypto.randomUUID();
+    try { setResult(await submit({ data: { ...parsed.data, requestToken: requestToken.current } })); }
     catch { setResult({ status: 'error', message: 'Não foi possível enviar sua solicitação. Seus dados foram mantidos. Tente novamente.' }); }
     finally { sending.current = false; setBusy(false); }
   }
@@ -42,6 +44,7 @@ export function TrialForm({ unit, onUnitChange }: Props) {
     </div> : <>
       <h3>Solicite sua aula grátis</h3><p>Leva apenas alguns minutos.</p>
       <form noValidate onSubmit={handleSubmit}>
+        <div className="sr-only" aria-hidden="true"><label htmlFor="website">Website</label><input id="website" name="website" tabIndex={-1} autoComplete="off" maxLength={200} /></div>
         <fieldset disabled={busy} className="border-0 p-0 m-0 min-w-0">
           <div className="form-fields">
             <div className="field"><label htmlFor="nome">Nome completo <span className="text-primary">*</span></label><input id="nome" name="nome" placeholder="Como podemos chamar você?" autoComplete="name" required maxLength={100} {...invalid('nome')} />{error('nome')}</div>
@@ -51,7 +54,7 @@ export function TrialForm({ unit, onUnitChange }: Props) {
             </div>
             <div className="field"><label htmlFor="unidade">Escolha sua unidade <span className="text-primary">*</span></label><select id="unidade" name="unidade" required value={unit} onChange={e => onUnitChange(e.target.value)} {...invalid('unidade')}><option value="">Selecione uma unidade</option>{units.map(u => <option key={u.value} value={u.value}>{u.label}</option>)}</select>{error('unidade')}</div>
             <div className="field"><label htmlFor="modalidade">Qual modalidade deseja experimentar? <span className="text-primary">*</span></label><select id="modalidade" name="modalidade" required defaultValue="" {...invalid('modalidade')}><option value="">Selecione uma modalidade</option>{modalities.map(m => <option key={m.value} value={m.value}>{m.label}</option>)}</select>{error('modalidade')}</div>
-            <div className="field"><label htmlFor="prazo">Quando pretende começar? <span className="text-primary">*</span></label><select id="prazo" name="prazo" required defaultValue="" {...invalid('prazo')}><option value="">Selecione uma opção</option>{deadlines.map(d => <option key={d.value} value={d.value}>{d.label}</option>)}</select>{error('prazo')}</div>
+            <div className="field"><label htmlFor="inicio-treino">Quando pretende começar? <span className="text-primary">*</span></label><select id="inicio-treino" name="inicio" required defaultValue="" {...invalid('inicio')}><option value="">Selecione uma opção</option>{deadlines.map(d => <option key={d.value} value={d.value}>{d.label}</option>)}</select>{error('inicio')}</div>
             <div><label className="consent-label" htmlFor="consentimento"><input id="consentimento" name="consentimento" type="checkbox" required {...invalid('consentimento')} /><span>Autorizo a Rede Ritmo a utilizar meus dados para entrar em contato sobre minha solicitação de aula experimental.</span></label>{error('consentimento')}</div>
           </div>
           <Button className="campaign-button form-submit" type="submit" disabled={busy}>{busy ? <><LoaderCircle className="animate-spin" />Enviando solicitação…</> : <>Solicitar aula experimental grátis<ArrowUpRight /></>}</Button>

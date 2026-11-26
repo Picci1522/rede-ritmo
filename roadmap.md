@@ -1,11 +1,11 @@
 # Rede Ritmo
 - [x] Página única com identidade e imagens oficiais.
 - [x] Registro protegido, validação, classificação e duplicidade.
-- [ ] Integração n8n por N8N_WEBHOOK_URL; sucesso somente após HTTP 2xx.
-- [ ] Validação compartilhada, início e honeypot; normalização e duplicidade por e-mail ou WhatsApp.
-- [ ] Permitir nova tentativa após falha do n8n sem duplicar registros.
-- [ ] Preservar layout e imagens oficiais, incluindo Funcional.
-- [ ] Documentação curta do JSON, configuração e testes fictícios do n8n.
+- [x] Envio n8n por N8N_WEBHOOK_URL; sucesso somente após HTTP 2xx.
+- [x] Validação compartilhada, início e honeypot; normalização e duplicidade por e-mail ou WhatsApp.
+- [x] Permitir nova tentativa após falha do n8n sem duplicar registros.
+- [x] Preservar layout e imagens oficiais, incluindo Funcional.
+- [x] Documentação curta do JSON, configuração e testes fictícios do n8n (docs/n8n.md).
 - [x] Testes de regras e navegação em computador e celular.
 - [x] JSONs fictícios, apresentação e roteiro de vídeo para avaliação.
-- [ ] Atualizar documentação e preparar demonstração do recebimento real após integração.
+- [ ] Configurar N8N_WEBHOOK_URL e testar n8n → Trello → registro real — bloqueado por URL e acesso ao fluxo não fornecidos.
