@@ -1,0 +1,12 @@
+{
+  "exemplo_ficticio": true,
+  "nome": "Pessoa Demonstração 2",
+  "email": "demonstracao2@example.com",
+  "whatsapp": "5548999990002",
+  "unidade": "estreito",
+  "modalidade": "funcional",
+  "prazo": "este-mes",
+  "classificacao": "morno",
+  "data_solicitacao": "2026-11-26T01:00:00Z",
+  "consentimento": true
+}
