@@ -7,9 +7,9 @@ interface TrialFormProps {
 }
 
 const CLASSIFICACAO_MAP = {
-  'esta-semana': { valor: 'quente', rotulo: 'QUENTE' },
-  'este-mes': { valor: 'morno', rotulo: 'MORNO' },
-  pesquisando: { valor: 'frio', rotulo: 'FRIO' },
+  'esta-semana': { valor: 'quente', rotulo: 'QUENTE', badge: 'bg-[#FF6B2C] text-[#191817]' },
+  'este-mes': { valor: 'morno', rotulo: 'MORNO', badge: 'bg-amber-500 text-[#191817]' },
+  pesquisando: { valor: 'frio', rotulo: 'FRIO', badge: 'bg-blue-500 text-white' },
 } as const;
 
 const UNIDADE_LABELS: Record<string, string> = {
@@ -61,7 +61,7 @@ export function TrialForm({ unit, onUnitChange }: TrialFormProps) {
     message: string;
     unidadeNome?: string;
     modalidadeNome?: string;
-    prioridade?: { valor: string; rotulo: string };
+    prioridade?: { valor: string; rotulo: string; badge: string };
   } | null>(null);
 
   const webhookUrl = (import.meta.env.VITE_N8N_WEBHOOK_URL || '').trim();
@@ -72,27 +72,15 @@ export function TrialForm({ unit, onUnitChange }: TrialFormProps) {
     const emailTrim = email.trim();
     const whatsDigits = normalizeWhatsapp(whatsapp);
 
-    if (nomeTrim.length < 2) {
-      nextErrors.nome = 'Informe seu nome completo.';
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(emailTrim)) {
-      nextErrors.email = 'Informe um e-mail válido.';
-    }
+    if (nomeTrim.length < 2) nextErrors.nome = 'Informe seu nome completo.';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(emailTrim)) nextErrors.email = 'Informe um e-mail válido.';
     if (whatsDigits.length < 10 || whatsDigits.length > 11 || /^(\d)\1+$/.test(whatsDigits)) {
       nextErrors.whatsapp = 'Informe um WhatsApp válido com DDD.';
     }
-    if (!unit) {
-      nextErrors.unidade = 'Selecione uma unidade.';
-    }
-    if (!modalidade) {
-      nextErrors.modalidade = 'Selecione uma modalidade.';
-    }
-    if (!prazo || !(prazo in CLASSIFICACAO_MAP)) {
-      nextErrors.prazo = 'Informe quando pretende começar.';
-    }
-    if (!consentimento) {
-      nextErrors.consentimento = 'É necessário autorizar o contato para continuar.';
-    }
+    if (!unit) nextErrors.unidade = 'Selecione uma unidade.';
+    if (!modalidade) nextErrors.modalidade = 'Selecione uma modalidade.';
+    if (!prazo || !(prazo in CLASSIFICACAO_MAP)) nextErrors.prazo = 'Informe quando pretende começar.';
+    if (!consentimento) nextErrors.consentimento = 'É necessário autorizar o contato para continuar.';
 
     setErrors(nextErrors);
     return Object.keys(nextErrors).length === 0;
@@ -101,7 +89,6 @@ export function TrialForm({ unit, onUnitChange }: TrialFormProps) {
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     if (isSubmitting) return;
-
     setStatus(null);
 
     if (!validate()) {
@@ -117,7 +104,7 @@ export function TrialForm({ unit, onUnitChange }: TrialFormProps) {
       setStatus({
         type: 'warning',
         title: 'Integração não configurada',
-        message: 'Configure a variável VITE_N8N_WEBHOOK_URL no arquivo .env com a Production URL do seu n8n.',
+        message: 'Configure VITE_N8N_WEBHOOK_URL nas Environment Variables da Vercel.',
       });
       return;
     }
@@ -141,10 +128,7 @@ export function TrialForm({ unit, onUnitChange }: TrialFormProps) {
     try {
       const response = await fetch(webhookUrl, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify(payload),
       });
 
@@ -154,9 +138,7 @@ export function TrialForm({ unit, onUnitChange }: TrialFormProps) {
         setStatus({
           type: 'warning',
           title: 'Solicitação já registrada',
-          message:
-            data.message ||
-            'Já existe uma solicitação ativa registrada para este número de WhatsApp.',
+          message: data.message || 'Já existe uma solicitação ativa registrada para este número de WhatsApp.',
         });
         return;
       }
@@ -165,9 +147,7 @@ export function TrialForm({ unit, onUnitChange }: TrialFormProps) {
         setStatus({
           type: 'error',
           title: 'Não foi possível concluir o envio',
-          message:
-            data.message ||
-            'Ocorreu um erro ao processar sua solicitação. Seus dados foram mantidos; tente novamente.',
+          message: data.message || 'Ocorreu um erro ao processar sua solicitação. Seus dados foram mantidos.',
         });
         return;
       }
@@ -193,24 +173,28 @@ export function TrialForm({ unit, onUnitChange }: TrialFormProps) {
       setStatus({
         type: 'error',
         title: 'Falha de conexão com a integração',
-        message:
-          'Não foi possível conectar ao servidor da recepção. Verifique se o workflow do n8n está publicado e tente novamente.',
+        message: 'Não foi possível conectar ao servidor da recepção. Verifique se o workflow do n8n está publicado.',
       });
     } finally {
       setIsSubmitting(false);
     }
   }
 
+  const inputClass =
+    'w-full rounded-lg border border-white/15 bg-[#191817] px-4 py-3 text-sm text-[#FFF6EF] placeholder:text-[#FFF6EF]/40 focus:border-[#FF6B2C] focus:outline-none transition-colors';
+  const labelClass = 'block text-sm font-semibold text-[#FFF6EF] mb-1.5';
+  const errorClass = 'mt-1 block text-xs text-red-400';
+
   return (
-    <div className="form-card">
-      <div className="form-card-header">
-        <h3>Solicite sua aula grátis</h3>
-        <p>Leva apenas alguns minutos.</p>
+    <div className="rounded-2xl border border-white/15 bg-[#22201E] p-6 sm:p-8">
+      <div className="mb-6">
+        <h3 className="text-xl font-bold text-[#FFF6EF]">Solicite sua aula grátis</h3>
+        <p className="mt-1 text-sm text-[#FFF6EF]/70">Leva apenas alguns minutos.</p>
       </div>
 
-      <form onSubmit={handleSubmit} noValidate>
-        <div className="field-group">
-          <label htmlFor="nome">Nome completo</label>
+      <form onSubmit={handleSubmit} noValidate className="space-y-4">
+        <div>
+          <label htmlFor="nome" className={labelClass}>Nome completo</label>
           <input
             id="nome"
             type="text"
@@ -221,13 +205,14 @@ export function TrialForm({ unit, onUnitChange }: TrialFormProps) {
               setErrors((prev) => ({ ...prev, nome: '' }));
             }}
             placeholder="Digite seu nome completo"
+            className={inputClass}
             required
           />
-          {errors.nome && <span className="field-error" role="alert">{errors.nome}</span>}
+          {errors.nome && <span className={errorClass} role="alert">{errors.nome}</span>}
         </div>
 
-        <div className="field-group">
-          <label htmlFor="email">E-mail</label>
+        <div>
+          <label htmlFor="email" className={labelClass}>E-mail</label>
           <input
             id="email"
             type="email"
@@ -237,13 +222,14 @@ export function TrialForm({ unit, onUnitChange }: TrialFormProps) {
               setErrors((prev) => ({ ...prev, email: '' }));
             }}
             placeholder="seuemail@exemplo.com"
+            className={inputClass}
             required
           />
-          {errors.email && <span className="field-error" role="alert">{errors.email}</span>}
+          {errors.email && <span className={errorClass} role="alert">{errors.email}</span>}
         </div>
 
-        <div className="field-group">
-          <label htmlFor="whatsapp">WhatsApp com DDD</label>
+        <div>
+          <label htmlFor="whatsapp" className={labelClass}>WhatsApp com DDD</label>
           <input
             id="whatsapp"
             type="tel"
@@ -254,13 +240,14 @@ export function TrialForm({ unit, onUnitChange }: TrialFormProps) {
               setErrors((prev) => ({ ...prev, whatsapp: '' }));
             }}
             placeholder="(48) 99999-9999"
+            className={inputClass}
             required
           />
-          {errors.whatsapp && <span className="field-error" role="alert">{errors.whatsapp}</span>}
+          {errors.whatsapp && <span className={errorClass} role="alert">{errors.whatsapp}</span>}
         </div>
 
-        <div className="field-group">
-          <label htmlFor="unidade">Escolha sua unidade</label>
+        <div>
+          <label htmlFor="unidade" className={labelClass}>Escolha sua unidade</label>
           <select
             id="unidade"
             value={unit}
@@ -268,6 +255,7 @@ export function TrialForm({ unit, onUnitChange }: TrialFormProps) {
               onUnitChange(e.target.value);
               setErrors((prev) => ({ ...prev, unidade: '' }));
             }}
+            className={inputClass}
             required
           >
             <option value="">Selecione uma unidade</option>
@@ -275,11 +263,11 @@ export function TrialForm({ unit, onUnitChange }: TrialFormProps) {
             <option value="estreito">Estreito</option>
             <option value="sao-jose">São José</option>
           </select>
-          {errors.unidade && <span className="field-error" role="alert">{errors.unidade}</span>}
+          {errors.unidade && <span className={errorClass} role="alert">{errors.unidade}</span>}
         </div>
 
-        <div className="field-group">
-          <label htmlFor="modalidade">Qual modalidade deseja experimentar?</label>
+        <div>
+          <label htmlFor="modalidade" className={labelClass}>Qual modalidade deseja experimentar?</label>
           <select
             id="modalidade"
             value={modalidade}
@@ -287,6 +275,7 @@ export function TrialForm({ unit, onUnitChange }: TrialFormProps) {
               setModalidade(e.target.value);
               setErrors((prev) => ({ ...prev, modalidade: '' }));
             }}
+            className={inputClass}
             required
           >
             <option value="">Selecione uma modalidade</option>
@@ -295,11 +284,11 @@ export function TrialForm({ unit, onUnitChange }: TrialFormProps) {
             <option value="pilates">Pilates</option>
             <option value="danca">Dança</option>
           </select>
-          {errors.modalidade && <span className="field-error" role="alert">{errors.modalidade}</span>}
+          {errors.modalidade && <span className={errorClass} role="alert">{errors.modalidade}</span>}
         </div>
 
-        <div className="field-group">
-          <label htmlFor="prazo">Quando pretende começar?</label>
+        <div>
+          <label htmlFor="prazo" className={labelClass}>Quando pretende começar?</label>
           <select
             id="prazo"
             value={prazo}
@@ -307,6 +296,7 @@ export function TrialForm({ unit, onUnitChange }: TrialFormProps) {
               setPrazo(e.target.value);
               setErrors((prev) => ({ ...prev, prazo: '' }));
             }}
+            className={inputClass}
             required
           >
             <option value="">Selecione uma opção</option>
@@ -314,11 +304,11 @@ export function TrialForm({ unit, onUnitChange }: TrialFormProps) {
             <option value="este-mes">Quero começar neste mês</option>
             <option value="pesquisando">Ainda estou pesquisando</option>
           </select>
-          {errors.prazo && <span className="field-error" role="alert">{errors.prazo}</span>}
+          {errors.prazo && <span className={errorClass} role="alert">{errors.prazo}</span>}
         </div>
 
-        <div className="field-group">
-          <label className="checkbox-label" htmlFor="consentimento">
+        <div className="pt-1">
+          <label htmlFor="consentimento" className="flex items-start gap-3 text-xs text-[#FFF6EF]/80 cursor-pointer">
             <input
               id="consentimento"
               type="checkbox"
@@ -327,38 +317,48 @@ export function TrialForm({ unit, onUnitChange }: TrialFormProps) {
                 setConsentimento(e.target.checked);
                 setErrors((prev) => ({ ...prev, consentimento: '' }));
               }}
+              className="mt-0.5 h-4 w-4 shrink-0 accent-[#FF6B2C]"
               required
             />
             <span>
               Autorizo a Rede Ritmo a utilizar meus dados para entrar em contato sobre minha solicitação de aula experimental.
             </span>
           </label>
-          {errors.consentimento && (
-            <span className="field-error" role="alert">{errors.consentimento}</span>
-          )}
+          {errors.consentimento && <span className={errorClass} role="alert">{errors.consentimento}</span>}
         </div>
 
-        <Button type="submit" className="campaign-button w-full" disabled={isSubmitting}>
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          className="w-full rounded-lg bg-[#FF6B2C] py-6 text-base font-semibold text-[#191817] hover:bg-[#e55a1f] transition-colors"
+        >
           {isSubmitting ? 'Enviando solicitação...' : 'Solicitar aula experimental grátis'}
         </Button>
 
         {status && (
-          <div className={`form-status is-${status.type}`} aria-live="polite">
-            <strong className="status-title">{status.title}</strong>
-            <p>{status.message}</p>
+          <div
+            aria-live="polite"
+            className={`mt-4 rounded-lg border p-4 text-sm ${
+              status.type === 'success'
+                ? 'border-emerald-400/60 bg-emerald-500/10 text-[#FFF6EF]'
+                : status.type === 'warning'
+                ? 'border-amber-400/60 bg-amber-500/10 text-[#FFF6EF]'
+                : 'border-red-400/60 bg-red-500/10 text-[#FFF6EF]'
+            }`}
+          >
+            <strong className="block text-base font-bold mb-1">{status.title}</strong>
+            <p className="text-[#FFF6EF]/85">{status.message}</p>
             {status.type === 'success' && (
-              <>
-                <ul className="status-summary">
-                  <li><strong>Unidade escolhida:</strong> {status.unidadeNome}</li>
-                  <li><strong>Modalidade escolhida:</strong> {status.modalidadeNome}</li>
-                  <li><strong>Status:</strong> Recebimento confirmado pela recepção</li>
-                </ul>
+              <div className="mt-3 space-y-1 text-xs text-[#FFF6EF]/80">
+                <p><strong>Unidade escolhida:</strong> {status.unidadeNome}</p>
+                <p><strong>Modalidade escolhida:</strong> {status.modalidadeNome}</p>
+                <p><strong>Status:</strong> Recebimento confirmado pela recepção</p>
                 {status.prioridade && (
-                  <span className={`priority-badge priority-${status.prioridade.valor}`}>
+                  <span className={`mt-2 inline-block rounded-full px-3 py-1 text-xs font-bold ${status.prioridade.badge}`}>
                     Prioridade {status.prioridade.rotulo}
                   </span>
                 )}
-              </>
+              </div>
             )}
           </div>
         )}
