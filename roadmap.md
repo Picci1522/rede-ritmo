@@ -1,9 +1,11 @@
 # Rede Ritmo
 - [x] Página única com identidade e imagens oficiais.
 - [x] Registro protegido, validação, classificação e duplicidade.
-- [ ] Validar planejamento ULTRA V3 antes de novas funcionalidades.
-- [ ] Encaminhamento real para recepção — propor fila protegida no Lovable Cloud como alternativa sem serviço externo.
-- [ ] Painel da recepção com indicadores, filtros e prioridades — aguarda aprovação do planejamento.
+- [ ] Integração n8n por N8N_WEBHOOK_URL; sucesso somente após HTTP 2xx.
+- [ ] Validação compartilhada, início e honeypot; normalização e duplicidade por e-mail ou WhatsApp.
+- [ ] Permitir nova tentativa após falha do n8n sem duplicar registros.
+- [ ] Preservar layout e imagens oficiais, incluindo Funcional.
+- [ ] Documentação curta do JSON, configuração e testes fictícios do n8n.
 - [x] Testes de regras e navegação em computador e celular.
 - [x] JSONs fictícios, apresentação e roteiro de vídeo para avaliação.
 - [ ] Atualizar documentação e preparar demonstração do recebimento real após integração.
