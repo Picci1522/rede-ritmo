@@ -64,7 +64,10 @@ export function TrialForm({ unit, onUnitChange }: TrialFormProps) {
     prioridade?: { valor: string; rotulo: string; badge: string };
   } | null>(null);
 
-  const webhookUrl = (import.meta.env.VITE_N8N_WEBHOOK_URL || '').trim();
+  const webhookUrl = (
+  import.meta.env.VITE_N8N_WEBHOOK_URL ||
+  'https://picci.app.n8n.cloud/webhook/rede-ritmo-aula'
+).trim();
 
   function validate(): boolean {
     const nextErrors: Record<string, string> = {};
