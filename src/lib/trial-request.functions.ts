@@ -3,34 +3,33 @@ import { submissionSchema, toN8nPayload } from './trial-request';
 import { deliverToN8n } from './n8n-delivery';
 import { z } from 'zod';
 
-const claimSchema = z.union([
-  z.object({ status: z.literal('claimed'), id: z.uuid(), created_at: z.string() }),
+const registerSchema = z.union([
+  z.object({ status: z.literal('created'), id: z.uuid(), prioridade: z.enum(['quente', 'morno', 'frio']), created_at: z.string() }),
   z.object({ status: z.literal('duplicate') }),
 ]);
 
+// Public lead intake: revalidates input; priority and 30-day duplicate rule run in the database function.
 export const submitTrialRequest = createServerFn({ method: 'POST' })
   .inputValidator((input: unknown) => input)
   .handler(async ({ data }) => {
     const parsed = submissionSchema.safeParse(data);
     if (!parsed.success) return { status: 'error' as const, message: parsed.error.issues[0]?.message ?? 'Revise os dados e tente novamente.' };
     const input = parsed.data;
-    const webhook = process.env['N8N_WEBHOOK_URL'];
-    if (!webhook) return { status: 'error' as const, message: 'O envio está indisponível porque a integração com o n8n ainda não foi configurada. Seus dados foram mantidos; tente novamente após a configuração.' };
-    // Public lead intake: validated, atomic reservation only; never expose stored PII or retry tokens.
     const { supabaseAdmin } = await import('@/integrations/supabase/client.server');
-    const payload = toN8nPayload(input);
-    const { data: reservation, error } = await supabaseAdmin.rpc('claim_n8n_submission', { p_payload: payload, p_token: input.requestToken });
-    if (error) return { status: 'error' as const, message: 'Não foi possível preparar o envio. Seus dados foram mantidos; tente novamente.' };
-    const claim = claimSchema.safeParse(reservation);
-    if (!claim.success) return { status: 'error' as const, message: 'Não foi possível preparar o envio. Tente novamente.' };
-    if (claim.data.status === 'duplicate') return { status: 'duplicate' as const, message: 'Já existe uma solicitação recebida ou em processamento para este e-mail ou WhatsApp. Aguarde o atendimento da equipe.' };
-    const row = claim.data;
-    const delivery = await deliverToN8n(webhook, { ...payload, id: row.id, data_solicitacao: row.created_at }, row.id);
-    const { error: statusError } = await supabaseAdmin.from('n8n_submissions').update({ status: delivery.accepted ? 'delivered' : 'failed' }).eq('id', row.id).eq('retry_token', input.requestToken);
-    if (!delivery.accepted) return { status: 'error' as const, message: delivery.message };
-    if (statusError) {
-      // n8n has accepted it; do not encourage creating a second card due to local bookkeeping failure.
-      return { status: 'pending' as const, message: 'O n8n recebeu o pedido, mas houve uma falha ao atualizar o controle do envio. Aguarde a equipe antes de reenviar.' };
+    const { data: result, error } = await supabaseAdmin.rpc('register_lead', {
+      p_nome: input.nome, p_email: input.email, p_whatsapp: input.whatsapp, p_unidade: input.unidade,
+      p_modalidade: input.modalidade, p_prazo: input.inicio, p_consentimento: input.consentimento,
+    });
+    if (error) { console.error('register_lead failed', error.code); return { status: 'error' as const, message: 'Não foi possível registrar sua solicitação agora. Seus dados foram mantidos; tente novamente.' }; }
+    const reg = registerSchema.safeParse(result);
+    if (!reg.success) return { status: 'error' as const, message: 'Não foi possível registrar sua solicitação agora. Tente novamente.' };
+    if (reg.data.status === 'duplicate') return { status: 'duplicate' as const, message: 'Já recebemos uma solicitação com este e-mail ou WhatsApp nos últimos 30 dias. Nossa equipe entrará em contato em breve.' };
+    const lead = reg.data;
+    // Optional external webhook (Make/n8n). Only runs when N8N_WEBHOOK_URL is configured; result is logged as an event.
+    const webhook = process.env['N8N_WEBHOOK_URL'];
+    if (webhook) {
+      const delivery = await deliverToN8n(webhook, { ...toN8nPayload(input), id: lead.id, prioridade: lead.prioridade, data_solicitacao: lead.created_at }, lead.id);
+      await supabaseAdmin.from('integration_events').insert({ lead_id: lead.id, destino: 'webhook', status: delivery.accepted ? 'enviado' : 'falhou', detalhe: delivery.accepted ? 'HTTP 2xx' : 'Sem confirmação 2xx' });
     }
-    return { status: 'success' as const, unidade: input.unidade, modalidade: input.modalidade };
+    return { status: 'success' as const, unidade: input.unidade, modalidade: input.modalidade, prioridade: lead.prioridade };
   });

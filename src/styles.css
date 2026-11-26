@@ -157,3 +157,10 @@
 }
 @media(max-width: 380px) { .hero-title { font-size: 40px; } .hero-actions { flex-direction: column; align-items: stretch; } .card-image { height: 145px; } .modality-body { padding: 12px; } }
 @media(prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+.priority-badge { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; padding: 4px 12px; font-size: 11px; font-weight: 600; letter-spacing: .04em; border: 1px solid transparent; }
+.priority-quente { background: var(--primary); color: var(--primary-foreground); }
+.priority-morno { background: color-mix(in oklch, var(--primary) 18%, transparent); color: var(--primary); border-color: var(--primary); }
+.priority-frio { background: var(--secondary); color: var(--muted-foreground); border-color: var(--border); }
+.admin-shell { min-height: 100vh; background: var(--background); color: var(--foreground); }
+.admin-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px; }
+.admin-input { height: 40px; border: 1px solid var(--border); border-radius: 6px; background: var(--secondary); color: var(--foreground); padding: 0 10px; font-size: 13px; }

@@ -14,6 +14,83 @@ export type Database = {
   }
   public: {
     Tables: {
+      integration_events: {
+        Row: {
+          created_at: string
+          destino: string
+          detalhe: string | null
+          id: string
+          lead_id: string
+          status: string
+        }
+        Insert: {
+          created_at?: string
+          destino: string
+          detalhe?: string | null
+          id?: string
+          lead_id: string
+          status: string
+        }
+        Update: {
+          created_at?: string
+          destino?: string
+          detalhe?: string | null
+          id?: string
+          lead_id?: string
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "integration_events_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      leads: {
+        Row: {
+          consentimento: boolean
+          created_at: string
+          email: string
+          id: string
+          modalidade: string
+          nome: string
+          prazo: string
+          prioridade: string
+          status: string
+          unidade: string
+          whatsapp: string
+        }
+        Insert: {
+          consentimento: boolean
+          created_at?: string
+          email: string
+          id?: string
+          modalidade: string
+          nome: string
+          prazo: string
+          prioridade: string
+          status?: string
+          unidade: string
+          whatsapp: string
+        }
+        Update: {
+          consentimento?: boolean
+          created_at?: string
+          email?: string
+          id?: string
+          modalidade?: string
+          nome?: string
+          prazo?: string
+          prioridade?: string
+          status?: string
+          unidade?: string
+          whatsapp?: string
+        }
+        Relationships: []
+      }
       n8n_submissions: {
         Row: {
           attempt_at: string
@@ -92,6 +169,24 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -101,9 +196,28 @@ export type Database = {
         Args: { p_payload: Json; p_token: string }
         Returns: Json
       }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      register_lead: {
+        Args: {
+          p_consentimento: boolean
+          p_email: string
+          p_modalidade: string
+          p_nome: string
+          p_prazo: string
+          p_unidade: string
+          p_whatsapp: string
+        }
+        Returns: Json
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -230,6 +344,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin"],
+    },
   },
 } as const
