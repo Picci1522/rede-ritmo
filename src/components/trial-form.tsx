@@ -52,6 +52,7 @@ export function TrialForm({ unit, onUnitChange }: TrialFormProps) {
   const [modalidade, setModalidade] = useState('');
   const [prazo, setPrazo] = useState('');
   const [consentimento, setConsentimento] = useState(false);
+  const [website, setWebsite] = useState(''); // Campo isca (honeypot)
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -65,9 +66,9 @@ export function TrialForm({ unit, onUnitChange }: TrialFormProps) {
   } | null>(null);
 
   const webhookUrl = (
-  import.meta.env.VITE_N8N_WEBHOOK_URL ||
-  'https://picci.app.n8n.cloud/webhook/rede-ritmo-aula'
-).trim();
+    import.meta.env.VITE_N8N_WEBHOOK_URL ||
+    'https://picci.app.n8n.cloud/webhook/rede-ritmo-aula'
+  ).trim();
 
   function validate(): boolean {
     const nextErrors: Record<string, string> = {};
@@ -124,6 +125,7 @@ export function TrialForm({ unit, onUnitChange }: TrialFormProps) {
       classificacao: classificacaoInfo.valor,
       data_solicitacao: new Date().toISOString(),
       consentimento: true,
+      website, // Campo isca enviado ao n8n
     };
 
     setIsSubmitting(true);
@@ -172,6 +174,7 @@ export function TrialForm({ unit, onUnitChange }: TrialFormProps) {
       setModalidade('');
       setPrazo('');
       setConsentimento(false);
+      setWebsite('');
     } catch {
       setStatus({
         type: 'error',
@@ -196,6 +199,17 @@ export function TrialForm({ unit, onUnitChange }: TrialFormProps) {
       </div>
 
       <form onSubmit={handleSubmit} noValidate className="space-y-4">
+        <input
+          type="text"
+          name="website"
+          value={website}
+          onChange={(e) => setWebsite(e.target.value)}
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          style={{ display: 'none' }}
+        />
+
         <div>
           <label htmlFor="nome" className={labelClass}>Nome completo</label>
           <input
